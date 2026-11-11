@@ -836,6 +836,11 @@ textarea.form-control {
     font-size: 14px;
   }
 
+  .app {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
   .sidebar {
     transform: translateX(-100%);
   }
@@ -891,6 +896,11 @@ textarea.form-control {
 @media (min-width: 480px) and (max-width: 639px) {
   html {
     font-size: 14px;
+  }
+
+  .app {
+    width: 100% !important;
+    margin-left: 0 !important;
   }
 
   .sidebar {
@@ -964,6 +974,11 @@ textarea.form-control {
 @media (max-width: 479px) {
   html {
     font-size: 13px;
+  }
+
+  .app {
+    width: 100% !important;
+    margin-left: 0 !important;
   }
 
   .sidebar {
