@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-  <title>ABU FIGHT SCHOOL — Davomat</title>
+  <title>ABU FIGHT SCHOOL — Davomat jurnali</title>
   <link rel="manifest" href="{% static 'manifest.json' %}">
 
   <!-- iOS PWA Meta Tags -->
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="ABU Fight">
 <link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/logo.jpg.jpg' %}">
@@ -19,13 +19,14 @@
 <link rel="apple-touch-icon" sizes="192x192" href="{% static 'img/logo.jpg.jpg' %}">
 <link rel="apple-touch-icon" sizes="384x384" href="{% static 'img/logo.jpg.jpg' %}">
 <link rel="apple-touch-icon" sizes="512x512" href="{% static 'img/logo.jpg.jpg' %}">
+
   <!-- Safari Mobile -->
   <meta name="format-detection" content="telephone=no">
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="stylesheet" href="{% static 'css/common.css' %}">
   <link rel="stylesheet" href="{% static 'css/davomat.css' %}">
 </head>
-<body data-page="davomat" data-title="Davomat — guruhlar">
+<body data-page="davomat-guruh" data-title="Davomat jurnali">
   <aside class="sidebar">
     <div style="padding:0.5rem 0.75rem 1rem; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:1rem;">
       <strong>ABU FIGHT SCHOOL</strong><br>
@@ -48,38 +49,80 @@
       <header class="header">
         <div class="header-left">
           <button class="menu-toggle" id="menuBtn">&#9776;</button>
-          <h2 id="page-title">Davomat — guruhlar</h2>
+          <h2 id="page-title">Davomat jurnali</h2>
         </div>
-        <div class="header-right" id="header-right"></div>
+        <div class="header-right" id="header-right">
+          <a href="{% url 'davomat' %}" class="btn btn-secondary btn-sm">← Guruhlar</a>
+        </div>
       </header>
 
       <div class="content">
-        <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:1.25rem;">
-          Guruhni tanlang — ichiga kirib bor / yo'q belgilang.
-        </p>
-
-        <div class="group-cards">
+        <div class="group-tabs" style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:1rem;">
           {% for group in groups %}
-            <div class="card" style="padding:1rem; margin-bottom:1rem;">
-              <div style="display:flex;justify-content:space-between;gap:1rem;align-items:center;flex-wrap:wrap;">
-                <div>
-                  <h3 style="margin:0; font-size:1.1rem;">{{ group.name }}</h3>
-                  <div style="color:var(--text-muted); margin-top:0.3rem;">
-                    Murabbiy: {{ group.coach.f_name|default:"Murabbiy yo'q" }}
-                  </div>
-                </div>
-                <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
-                  <span class="badge badge-secondary">{{ group.students.count }} sportchi</span>
-                  <a href="{% url 'davomat-guruh' %}?group={{ group.id }}" class="btn btn-primary btn-sm">Ochish</a>
-                </div>
-              </div>
-            </div>
+            <a href="{% url 'davomat-guruh' %}?group={{ group.id }}&month={{ month }}" class="btn btn-sm {% if selected_group and group.id == selected_group.id %}btn-primary{% else %}btn-secondary{% endif %}">
+              {{ group.name }}
+            </a>
           {% empty %}
-            <div class="card" style="padding:1rem;">
-              Hali guruhlar yo‘q. Avval guruh va sportchilarni yaratib chiqing.
-            </div>
+            <span style="color:var(--text-muted);">Guruhlar yo‘q.</span>
           {% endfor %}
         </div>
+
+        <div class="toolbar" style="margin-bottom:1rem;">
+          <div class="toolbar-left">
+            <span style="color:var(--text-muted);font-size:0.85rem;">
+              Oy: <strong>{{ month_label }}</strong>
+            </span>
+          </div>
+        </div>
+
+        <div class="legend" style="margin-bottom:1rem;">
+          <div class="legend-item"><span class="mark mark-present">B</span> Bor</div>
+          <div class="legend-item"><span class="mark mark-absent">Y</span> Yo'q</div>
+          <div class="legend-item"><span class="mark mark-late">K</span> Kech qolgan</div>
+          <div class="legend-item"><span class="mark mark-empty">·</span> Bo'sh</div>
+        </div>
+
+        {% if selected_group %}
+          <div class="table-wrap">
+            <table class="attendance-table">
+              <thead>
+                <tr>
+                  <th>Sportchi</th>
+                  {% for day in days %}
+                    <th style="min-width:60px; text-align:center;">{{ day.day }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in attendance_rows %}
+                  <tr>
+                    <td>{{ row.student.f_name }}</td>
+                    {% for item in row.daily_statuses %}
+                      <td style="padding:0.25rem; text-align:center;">
+                        <form method="post" style="display:flex; gap:0.2rem; justify-content:center; flex-wrap:wrap; margin:0;">
+                          {% csrf_token %}
+                          <input type="hidden" name="group_id" value="{{ selected_group.id }}">
+                          <input type="hidden" name="student_id" value="{{ row.student.id }}">
+                          <input type="hidden" name="date" value="{{ item.iso }}">
+                          <input type="hidden" name="month" value="{{ month }}">
+                          <button type="submit" name="status" value="present" class="btn btn-sm {% if item.status == 'present' %}btn-primary{% else %}btn-secondary{% endif %}" title="Bor">B</button>
+                          <button type="submit" name="status" value="absent" class="btn btn-sm {% if item.status == 'absent' %}btn-danger{% else %}btn-secondary{% endif %}" title="Yo'q">Y</button>
+                          <button type="submit" name="status" value="late" class="btn btn-sm {% if item.status == 'late' %}btn-warning{% else %}btn-secondary{% endif %}" title="Kech qolgan">K</button>
+                        </form>
+                      </td>
+                    {% endfor %}
+                  </tr>
+                {% empty %}
+                  <tr>
+                    <td colspan="{{ days|length|add:'1' }}" style="text-align:center; padding:1rem;">Bu guruhda hali sportchi yo'q.</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="empty-state">Hali guruhlar yo‘q. Avval guruhlar va sportchilar yarating.</p>
+        {% endif %}
       </div>
     </div>
   </div>
