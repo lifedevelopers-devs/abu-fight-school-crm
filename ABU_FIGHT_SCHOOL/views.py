@@ -264,8 +264,15 @@ def tolov(request):
 
 @login_required(login_url='login')
 def yangiliklar(request):
+    coach = get_logged_in_coach(request.user)
+    athlete = get_logged_in_athlete(request.user)
     news = News.objects.order_by('-created_at')
-    return render(request, 'yangiliklar.html', {'news': news})
+    return render(request, 'yangiliklar.html', {
+        'news': news,
+        'coach': coach,
+        'athlete': athlete,
+        'can_manage_news': bool(coach and not athlete),
+    })
 
 
 @login_required(login_url='login')
