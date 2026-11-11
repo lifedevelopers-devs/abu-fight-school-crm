@@ -27,7 +27,13 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '.onrender.com',
+    'abu-fight-school-crm.onrender.com',
+]
+
 
 
 # Application definition
@@ -158,4 +164,10 @@ LOGOUT_REDIRECT_URL = 'login'
 
 
 AUTH_USER_MODEL = 'ABU_FIGHT_SCHOOL.CustomUser'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'https://abu-fight-school-crm.onrender.com',
+]
+
 
