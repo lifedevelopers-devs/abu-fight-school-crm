@@ -333,7 +333,7 @@
   </style>
 </head>
 <body data-page="yangiliklar" data-title="Yangiliklar va e'lonlar">
-  <aside class="sidebar" style="position:fixed; left:0; top:0; width:260px; height:100vh; background:rgba(12,16,24,0.7); border-right:1px solid rgba(255,255,255,0.12); z-index:10; padding:1rem 0.75rem;">
+  <aside class="sidebar">
     <div style="padding:0.5rem 0.75rem 1rem; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:1rem;">
       <strong>ABU FIGHT SCHOOL</strong><br>
       <span style="color:var(--text-muted); font-size:0.8rem;">Murabbiy paneli</span>
@@ -350,7 +350,7 @@
       {{ user.get_full_name|default:user.username }}
     </div>
   </aside>
-  <div class="app" id="app" style="margin-left:260px; width:calc(100% - 260px);">
+  <div class="app" id="app">
     <div class="main">
       <header class="header">
         <div class="header-left">
@@ -369,55 +369,62 @@
             <!-- JS orqali yuklanadi -->
           </div>
 
-          <!-- Yangi e'lon qo'shish -->
-          <div class="card form-card" id="newsComposer">
-            <h3>Yangi e'lon qo'shish</h3>
-            <form id="newsForm">
-              <div class="form-group">
-                <label for="title">Sarlavha</label>
-                <input type="text" id="title" class="form-control" placeholder="E'lon sarlavhasi..." required>
-              </div>
-              <div class="form-group">
-                <label for="category">Kategoriya</label>
-                <select id="category" class="form-control">
-                  <option>Umumiy</option>
-                  <option>Musobaqa</option>
-                  <option>Jadval o'zgarishi</option>
-                  <option>Muhim e'lon</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="content">Matn</label>
-                <textarea id="content" class="form-control" placeholder="E'lon matnini yozing..." required></textarea>
-              </div>
-              <div class="form-group">
-                <label>Rasm (ixtiyoriy)</label>
-                <div class="news-upload" id="newsUpload">
-                  <div class="news-upload-icon">&#128247;</div>
-                  <div class="news-upload-title">Rasmni tanlang yoki tashlang</div>
-                  <div class="news-upload-hint">JPG, PNG, WEBP, GIF · 100 MB gacha</div>
-                  <input type="file" id="newsImage" accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif">
+          {% if can_manage_news %}
+            <!-- Yangi e'lon qo'shish -->
+            <div class="card form-card" id="newsComposer">
+              <h3>Yangi e'lon qo'shish</h3>
+              <form id="newsForm">
+                <div class="form-group">
+                  <label for="title">Sarlavha</label>
+                  <input type="text" id="title" class="form-control" placeholder="E'lon sarlavhasi..." required>
                 </div>
-                <div class="news-upload-preview" id="newsPreview">
-                  <img id="newsPreviewImg" alt="Rasm ko'rinishi">
-                  <div class="news-upload-meta">
-                    <strong id="newsPreviewName">—</strong>
-                    <span id="newsPreviewSize">—</span>
-                    <button type="button" class="news-upload-remove" id="newsImageClear">Olib tashlash</button>
+                <div class="form-group">
+                  <label for="category">Kategoriya</label>
+                  <select id="category" class="form-control">
+                    <option>Umumiy</option>
+                    <option>Musobaqa</option>
+                    <option>Jadval o'zgarishi</option>
+                    <option>Muhim e'lon</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="content">Matn</label>
+                  <textarea id="content" class="form-control" placeholder="E'lon matnini yozing..." required></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Rasm (ixtiyoriy)</label>
+                  <div class="news-upload" id="newsUpload">
+                    <div class="news-upload-icon">&#128247;</div>
+                    <div class="news-upload-title">Rasmni tanlang yoki tashlang</div>
+                    <div class="news-upload-hint">JPG, PNG, WEBP, GIF · 100 MB gacha</div>
+                    <input type="file" id="newsImage" accept="image/jpeg,image/png,image/webp,image/gif,.jpg,.jpeg,.png,.webp,.gif">
+                  </div>
+                  <div class="news-upload-preview" id="newsPreview">
+                    <img id="newsPreviewImg" alt="Rasm ko'rinishi">
+                    <div class="news-upload-meta">
+                      <strong id="newsPreviewName">—</strong>
+                      <span id="newsPreviewSize">—</span>
+                      <button type="button" class="news-upload-remove" id="newsImageClear">Olib tashlash</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label>
-                  <input type="checkbox" id="pinned" style="margin-right:0.4rem;">
-                  Muhim e'lon (yuqoriga qadash)
-                </label>
-              </div>
-              <button type="submit" class="btn btn-primary" style="width:100%;">
-                E'lonni joylashtirish
-              </button>
-            </form>
-          </div>
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" id="pinned" style="margin-right:0.4rem;">
+                    Muhim e'lon (yuqoriga qadash)
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+                  E'lonni joylashtirish
+                </button>
+              </form>
+            </div>
+          {% else %}
+            <div class="card form-card" id="newsComposer">
+              <h3>Yangiliklar</h3>
+              <p style="color: var(--text-muted); margin: 0;">Yangiliklarni ko'rish mumkin, lekin yangi e'lon qo'shish faqat murabbiylar uchun.</p>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
