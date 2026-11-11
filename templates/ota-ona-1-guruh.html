@@ -1,0 +1,13 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url={% url 'ota-ona' %}?g=boshlangich">
+  <title>Yo'naltirish</title>
+  <script>location.replace("{% url 'ota-ona' %}?g=boshlangich");</script>
+</head>
+<body>
+  <p><a href="{% url 'ota-ona' %}?g=boshlangich">Ota-ona portali</a></p>
+</body>
+</html>

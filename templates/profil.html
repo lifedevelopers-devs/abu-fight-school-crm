@@ -1,0 +1,232 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>ABU FIGHT SCHOOL — Mening profilim</title>
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+
+  <!-- iOS PWA Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ABU Fight">
+<link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="96x96" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="128x128" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="144x144" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="192x192" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="384x384" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="512x512" href="{% static 'img/logo.jpg.jpg' %}">
+  <!-- Safari Mobile -->
+  <meta name="format-detection" content="telephone=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+</head>
+<body data-page="profil" data-title="Mening profilim">
+  <aside class="sidebar" style="position:fixed; left:0; top:0; width:260px; height:100vh; background:rgba(12,16,24,0.7); border-right:1px solid rgba(255,255,255,0.12); z-index:10; padding:1rem 0.75rem;">
+    <div style="padding:0.5rem 0.75rem 1rem; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:1rem;">
+      <strong>ABU FIGHT SCHOOL</strong><br>
+      <span style="color:var(--text-muted); font-size:0.8rem;">
+        {% if coach %}Murabbiy profil{% elif athlete %}Sportchi profil{% else %}Profil{% endif %}
+      </span>
+    </div>
+    <nav style="display:flex; flex-direction:column; gap:0.5rem;">
+      <a href="{% url 'index' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">Dashboard</a>
+      <a href="{% url 'davomat' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">Davomat</a>
+      <a href="{% url 'azolar' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">A'zolar</a>
+      <a href="{% url 'tolov' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">To'lov</a>
+      <a href="{% url 'yangiliklar' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">Yangiliklar</a>
+      <a href="{% url 'profil' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">Profil</a>
+    </nav>
+    <div style="margin-top:auto; padding:0.75rem; border-top:1px solid rgba(255,255,255,0.12); color:var(--text-muted); font-size:0.8rem;">
+      {{ user.get_full_name|default:user.username }}
+    </div>
+  </aside>
+  <div class="app" id="app" style="margin-left:260px; width:calc(100% - 260px);">
+    <div class="main">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuBtn">&#9776;</button>
+          <img class="header-logo" src="{% static 'img/logo.jpg.jpg' %}" alt="ABU FIGHT SCHOOL">
+          <div>
+            <div style="font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted);">ABU FIGHT SCHOOL</div>
+            <h2 id="page-title">Mening profilim</h2>
+          </div>
+        </div>
+        <div class="header-right" id="header-right">
+          <a href="{% url 'index' %}" class="btn btn-secondary" style="padding:0.7rem 1rem; border-radius:999px; font-size:0.82rem;">Dashboard</a>
+          <div class="header-user">
+            {% if coach and coach.image %}
+              <img class="avatar avatar-image" src="{{ coach.image.url }}" alt="{{ coach.f_name }}">
+            {% elif athlete %}
+              <div class="avatar">{{ athlete.f_name|slice:':2'|upper }}</div>
+            {% else %}
+              <div class="avatar">{{ user_name|default:user.get_full_name|default:user.username|slice:':2'|upper }}</div>
+            {% endif %}
+            <div>
+              <div style="font-weight:600;">{% if coach %}{{ coach.f_name }}{% elif athlete %}{{ athlete.f_name }}{% else %}{{ user_name|default:user.get_full_name|default:user.username }}{% endif %}</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);">{% if coach %}Murabbiy{% elif athlete %}Sportchi{% else %}Foydalanuvchi{% endif %}</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="profile-layout">
+          <div>
+            <div class="card">
+              <div class="profile-header">
+                {% if coach and coach.image %}
+                  <img class="profile-avatar-lg" src="{{ coach.image.url }}" alt="{{ coach.f_name }}" style="object-fit:cover;">
+                {% elif athlete %}
+                  <div class="profile-avatar-lg" id="profileAvatar">{{ athlete.f_name|slice:':2'|upper }}</div>
+                {% else %}
+                  <div class="profile-avatar-lg" id="profileAvatar">{{ user_name|default:user.get_full_name|default:user.username|slice:':2'|upper }}</div>
+                {% endif %}
+                <div>
+                  <h3 id="profileName" style="font-size:1.2rem;margin-bottom:0.25rem;">{% if coach %}{{ coach.f_name }}{% elif athlete %}{{ athlete.f_name }}{% else %}{{ user_name|default:user.get_full_name|default:user.username }}{% endif %}</h3>
+                  <p id="profileRole" style="color:var(--text-muted);font-size:0.9rem;">{% if coach %}Murabbiy{% elif athlete %}Sportchi{% else %}Foydalanuvchi{% endif %}</p>
+                </div>
+              </div>
+
+              {% if coach %}
+                <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="inputName">To'liq ism</label>
+                    <input type="text" id="inputName" name="f_name" class="form-control" value="{{ coach.f_name|default:user.get_full_name|default:user.username }}">
+                  </div>
+                  <div class="grid-2">
+                    <div class="form-group">
+                      <label for="inputPhone">Telefon</label>
+                      <input type="tel" id="inputPhone" name="phone" class="form-control" value="{{ coach.phone|default:user.username }}">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputEmail">Email</label>
+                      <input type="email" id="inputEmail" name="email" class="form-control" value="{{ user.email }}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputLogin">Login (o'zgartirib bo'lmaydi)</label>
+                    <input type="text" id="inputLogin" class="form-control" value="{{ user.username }}" disabled>
+                  </div>
+                  <div class="grid-2">
+                    <div class="form-group">
+                      <label for="inputPassword">Yangi parol</label>
+                      <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Bo'sh qoldiring — o'zgarmaydi" autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                      <label for="inputPassword2">Parolni tasdiqlang</label>
+                      <input type="password" id="inputPassword2" class="form-control" placeholder="Takrorlang" autocomplete="new-password">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputImage">Profil rasmi</label>
+                    <input type="file" id="inputImage" name="image" class="form-control" accept="image/*">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputExperience">Tajriba (yil)</label>
+                    <input type="number" id="inputExperience" name="experience" class="form-control" min="0" value="{{ coach.experience|default:0 }}">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputDescription">Tavsif</label>
+                    <textarea id="inputDescription" name="description" class="form-control" rows="4">{{ coach.description|default:'' }}</textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">O'zgarishlarni saqlash</button>
+                </form>
+              {% elif athlete %}
+                <div class="form-group">
+                  <label>Ism</label>
+                  <input type="text" class="form-control" value="{{ athlete.f_name }}" disabled>
+                </div>
+                <div class="form-group">
+                  <label>Telefon</label>
+                  <input type="text" class="form-control" value="{{ athlete.phone }}" disabled>
+                </div>
+                <div class="form-group">
+                  <label>Yoshi</label>
+                  <input type="text" class="form-control" value="{{ athlete.age }} yosh" disabled>
+                </div>
+                <div class="form-group">
+                  <label>Guruhlar</label>
+                  <input type="text" class="form-control" value="{% for group in athlete.groups.all %}{{ group.name }}{% if not forloop.last %}, {% endif %}{% empty %}Yoq{% endfor %}" disabled>
+                </div>
+                <div class="card" style="margin-top:1rem;">
+                  <h3 class="card-title">Davomat holati</h3>
+                  <ul class="pay-history-list">
+                    {% for item in attendance_list %}
+                      <li>
+                        <div>
+                          <div><strong>{{ item.date }}</strong></div>
+                          <div class="pay-history-meta">{{ item.status_label }}</div>
+                        </div>
+                        <div class="pay-history-amount">{{ item.status_label }}</div>
+                      </li>
+                    {% empty %}
+                      <li class="pay-empty" style="display:block;border:none;">Davomat yozuvi yo'q.</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="card" style="margin-top:1rem;">
+                  <h3 class="card-title">To'lov holati</h3>
+                  <ul class="pay-history-list">
+                    {% for payment in payment_list %}
+                      <li>
+                        <div>
+                          <div><strong>{{ payment.group.name }}</strong></div>
+                          <div class="pay-history-meta">{{ payment.added_at|date:'d.m.Y H:i' }}</div>
+                        </div>
+                        <div class="pay-history-amount">{{ payment.price|floatformat:0 }}</div>
+                      </li>
+                    {% empty %}
+                      <li class="pay-empty" style="display:block;border:none;">To'lov yozuvi yo'q.</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3 class="card-title">Ma'lumotlar</h3>
+              {% if coach %}
+                <div class="profile-stats">
+                  <div class="profile-stat">
+                    <div class="val" id="statGroup">—</div>
+                    <div class="lbl">Guruh</div>
+                  </div>
+                  <div class="profile-stat">
+                    <div class="val" id="statExperience">—</div>
+                    <div class="lbl">Tajriba</div>
+                  </div>
+                </div>
+              {% elif athlete %}
+                <div class="profile-stats">
+                  <div class="profile-stat">
+                    <div class="val">{{ athlete.groups.count }}</div>
+                    <div class="lbl">Guruhlar</div>
+                  </div>
+                  <div class="profile-stat">
+                    <div class="val">{{ attendance_list|length }}</div>
+                    <div class="lbl">Davomat yozuvlari</div>
+                  </div>
+                </div>
+              {% endif %}
+              <form method="post" action="{% url 'logout' %}" style="margin-top:1.25rem;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary" style="width:100%;">
+                  Tizimdan chiqish
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,269 @@
+/* Developer Console */
+
+.dev-console {
+  font-family: "Cascadia Code", "Consolas", "Courier New", monospace;
+}
+
+.dev-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: #0a0c10;
+  border: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.dev-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dev-dot-red    { background: #ef4444; }
+.dev-dot-yellow { background: #eab308; }
+.dev-dot-green  { background: #22c55e; }
+
+.dev-terminal {
+  background: #060809;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 1rem;
+  min-height: 220px;
+  max-height: 360px;
+  overflow-y: auto;
+  font-size: 0.82rem;
+  line-height: 1.7;
+}
+
+.dev-line { margin-bottom: 0.15rem; }
+.dev-line.info  { color: #60a5fa; }
+.dev-line.ok    { color: #4ade80; }
+.dev-line.warn  { color: #facc15; }
+.dev-line.error { color: #f87171; }
+.dev-line.cmd   { color: #e8192c; }
+.dev-line.dim   { color: #6b7280; }
+
+.dev-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #060809;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.dev-input-row span {
+  color: #e8192c;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.dev-input-row input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #f2f4f7;
+  font-family: inherit;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.dev-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.dev-panel {
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+
+.dev-panel h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font);
+}
+
+.dev-user-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+  font-family: var(--font);
+}
+
+.dev-user-row:last-child { border-bottom: none; }
+
+.dev-link-list {
+  list-style: none;
+  font-family: var(--font);
+}
+
+.dev-link-list li {
+  margin-bottom: 0.5rem;
+}
+
+.dev-link-list a {
+  font-size: 0.85rem;
+  color: #60a5fa;
+  transition: color 0.2s;
+}
+
+.dev-link-list a:hover {
+  color: var(--accent);
+}
+
+.dev-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.dev-stat {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.15) inset;
+}
+
+.dev-stat .val {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.dev-stat .lbl {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* Responsive — Tablet Portrait */
+@media (max-width: 768px) {
+  .dev-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dev-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dev-terminal {
+    min-height: 180px;
+    max-height: 300px;
+    font-size: 0.78rem;
+  }
+
+  .dev-panel {
+    padding: 1rem;
+  }
+
+  .dev-panel h3 {
+    font-size: 0.85rem;
+  }
+
+  .dev-stat {
+    padding: 0.85rem;
+  }
+
+  .dev-stat .val {
+    font-size: 1.25rem;
+  }
+}
+
+/* Responsive — Mobile */
+@media (max-width: 640px) {
+  .dev-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dev-header-bar {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.72rem;
+  }
+
+  .dev-terminal {
+    padding: 0.85rem;
+    min-height: 150px;
+    max-height: 250px;
+    font-size: 0.75rem;
+  }
+
+  .dev-input-row {
+    padding: 0.6rem 0.85rem;
+  }
+
+  .dev-input-row input {
+    font-size: 0.8rem;
+  }
+
+  .dev-panel {
+    padding: 0.875rem;
+  }
+
+  .dev-panel h3 {
+    font-size: 0.8rem;
+  }
+
+  .dev-user-row {
+    font-size: 0.78rem;
+    padding: 0.45rem 0;
+  }
+
+  .dev-link-list a {
+    font-size: 0.8rem;
+  }
+
+  .dev-stat {
+    padding: 0.75rem;
+  }
+
+  .dev-stat .val {
+    font-size: 1.15rem;
+  }
+
+  .dev-stat .lbl {
+    font-size: 0.68rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dev-terminal {
+    font-size: 0.7rem;
+    padding: 0.75rem;
+  }
+
+  .dev-panel {
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .dev-stat {
+    border-radius: 12px;
+  }
+}

@@ -1,0 +1,202 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>ABU FIGHT SCHOOL — Maxfiylik siyosati va Foydalanish shartlari</title>
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+
+  <!-- iOS PWA Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ABU Fight">
+<link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="96x96" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="128x128" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="144x144" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="192x192" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="384x384" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="512x512" href="{% static 'img/logo.jpg.jpg' %}">
+
+  <!-- Safari Mobile -->
+  <meta name="format-detection" content="telephone=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <script>(function(){try{var t=localStorage.getItem('afs-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <link rel="stylesheet" href="{% static 'css/legal.css' %}">
+</head>
+<body>
+  <div class="legal-page">
+    <div class="legal-wrap">
+      <header class="legal-top">
+        <div class="login-logo-img">
+          <img src="{% static 'img/logo.jpg.jpg' %}" alt="ABU FIGHT SCHOOL">
+        </div>
+        <h1>ABU FIGHT SCHOOL</h1>
+        <p>
+          Kurash va qo'l jangi (рукопашный бой) sport zali uchun<br>
+          Maxfiylik siyosati va Foydalanish shartlari
+        </p>
+      </header>
+
+      <nav class="legal-nav">
+        <a href="#maxfiylik">Maxfiylik siyosati</a>
+        <a href="#shartlar">Foydalanish shartlari</a>
+        <a href="{% url 'login' %}">Kirish sahifasi</a>
+      </nav>
+
+      <!-- MAXFIYLIK SIYOSATI -->
+      <article class="legal-card" id="maxfiylik">
+        <h2>
+          Maxfiylik siyosati
+          <span>Privacy Policy</span>
+        </h2>
+
+        <h3>1. Umumiy qoidalar</h3>
+        <p>
+          ABU FIGHT SCHOOL ("Biz") mijozlarimizning shaxsiy ma'lumotlarini himoya qilish majburiyatini oladi.
+          Ushbu siyosat kurash va qo'l jangi mashg'ulotlariga yozilish, zal xizmatlaridan foydalanish jarayonida
+          to'planadigan ma'lumotlarni qanday qabul qilishimiz va saqlashimizni tushuntiradi.
+        </p>
+
+        <h3>2. Biz to'playdigan ma'lumotlar</h3>
+        <p>Sizdan quyidagi shaxsiy ma'lumotlarni so'rashimiz mumkin:</p>
+        <ul>
+          <li>Ismingiz, familiyangiz va sharifingiz;</li>
+          <li>
+            <strong>Tug'ilgan sanangiz</strong> — yoshingiz qo'l jangi va kurash guruhlarini to'g'ri taqsimlash uchun;
+          </li>
+          <li>Aloqa uchun telefon raqami va ijtimoiy tarmoq akkauntlari;</li>
+          <li>
+            <strong>Sog'lik holati haqida ma'lumot</strong> — jang san'atlari bilan shug'ullanish uchun
+            tibbiy qarshi ko'rsatmalar yo'qligini aniqlash uchun.
+          </li>
+        </ul>
+
+        <h3>3. Ma'lumotlardan foydalanish maqsadi</h3>
+        <p>To'plangan ma'lumotlar quyidagi maqsadlarda ishlatiladi:</p>
+        <ul>
+          <li>Mashg'ulotlar jadvali, obuna (abonement) muddati va yangiliklar haqida xabardor qilish;</li>
+          <li>Qo'l jangi va kurash bo'yicha jismoniy holatingizga mos mashg'ulot rejasini tuzish;</li>
+          <li>Sport zali xavfsizligini ta'minlash.</li>
+        </ul>
+
+        <h3>4. Axborotni himoya qilish</h3>
+        <p>
+          Shaxsiy ma'lumotlaringiz xavfsiz serverlarda saqlanadi va uchinchi shaxslarga
+          (sizning ruxsatingizsiz) sotilmaydi yoki oshkor etilmaydi.
+        </p>
+      </article>
+
+      <!-- FOYDALANISH SHARTLARI -->
+      <article class="legal-card" id="shartlar">
+        <h2>
+          Foydalanish shartlari
+          <span>Terms and Conditions</span>
+        </h2>
+
+        <h3>1. Qabul qilish shartlari</h3>
+        <p>
+          ABU FIGHT SCHOOL zalida kurash va qo'l jangi mashg'ulotlarida qatnashishni boshlashdan avval
+          ushbu shartlarni diqqat bilan o'qib chiqing. Zal xizmatlaridan foydalanishni boshlash,
+          shartlarga to'liq rozi ekanligingizni anglatadi.
+        </p>
+
+        <h3>2. Xavfsizlik va mas'uliyat</h3>
+        <p>
+          Qo'l jangi va kurash  yuqori jarohat xavfiga ega sport turlari hisoblanadi.
+          Shug'ullanuvchi mashg'ulot vaqtida murabbiy ko'rsatmalariga qat'iy rioya qilishi shart.
+        </p>
+        <ul>
+          <li>
+            Jarohatlar oldini olish uchun shaxsiy himoya vositalari
+            (boks qo'lqoplari, kapa, bint, nakolenniklar) taqilishi shart.
+          </li>
+          <li>
+            Zal rahbariyati va murabbiylar jarohat sababli shaxsiy aybingiz bilan yetkazilgan zarar uchun
+            moddiy yoki ma'naviy javobgarlikni o'z zimmalariga olmaydi.
+          </li>
+        </ul>
+
+        <div class="legal-note">
+          Diqqat: Mashg'ulotlarda ishtirok etishdan oldin sog'ligingiz holatini murabbiyga xabar qiling.
+          Tibbiy qarshi ko'rsatmalar mavjud bo'lsa, shug'ullanish tavsiya etilmaydi.
+        </div>
+
+        <h3>3. Abonent va to'lov shartlari</h3>
+        <ul>
+          <li>Mashg'ulotlar uchun to'lovlar har oyning (yoki belgilangan muddatning) boshida to'liq amalga oshiriladi.</li>
+          <li>Abonent faqat shaxsiy hisoblanadi va boshqa shaxsga o'tkazilmaydi.</li>
+          <li>
+            O'tkazib yuborilgan mashg'ulotlar sababli abonent muddati uzaytirilmaydi yoki pul qaytarilmaydi
+            (faqat uzrli sabablar / kasallik bo'yicha ma'lumotnoma taqdim etilgan hollar bundan mustasno).
+          </li>
+        </ul>
+
+        <h3>4. Ichki tartib-qoidalar</h3>
+        <ul>
+          <li>Zalga faqat toza sport kiyimi va maxsus poyafzalda (mataga mos) kirish ruxsat etiladi.</li>
+          <li>
+            Guruhdoshlarga va murabbiyga nisbatan hurmatsizlik qilish, agressiv xatti-harakatlar qilish taqiqlanadi.
+            Tartibni buzgan shaxslar mashg'ulotdan chetlashtiriladi va shartnoma bekor qilinishi mumkin.
+          </li>
+        </ul>
+      </article>
+
+<article>
+  <h3>5. Talablar va intizom</h3>
+  <ul>
+    <li>Zalga o'z vaqtida kelish shart. Mashg'ulotga 15 daqiqa avval kelish kerak, kechikkanlar qo'yilmaydi.</li>
+  </ul>
+</article>
+
+
+
+<article>
+  <h3>6. Sayt va boshqa</h3>
+  <ul>
+    <li>Saytda farzandingizning aksentini ko'rishingiz mumkin, kelajakda sayt kengaytiriladi va videolar joylanib boriladi.</li>
+    <li>
+      Muammo yuzaga kelsa yoki ro'yxatdan o'tmoqchi bo'lsangiz 
+      <a href="https://t.me/@abu_coach">Bosh Murabbiy</a> yoki 
+      <a href="https://t.me/abufight_supportbot">ABU FIGHT SCHOOL qo'llab quvattlash Telegram boti</a> ga murojaat qiling.
+    </li>
+    <li>
+      Mashg'ulotlarga qo'shilmoqchi bo'lsangiz 
+      <a href="https://maps.app.goo.gl/9QVaGu1sS3Yjmv4V8">shu manzilga</a> kelib mashg'ulotlarni ko'rishingiz va kelishuv shartnomasini olishingiz mumkin.
+      Farzandingizning metrikasi va 86-forma (sog'liq guvohnomasi) talab qilinadi.
+    </li>
+    <li>Birinchi mashg'ulot bepul, keyingi mashg'ulotlar uchun oylik to'lov amalga oshiriladi.</li>
+  </ul>
+</article>
+
+
+
+
+<article>
+  <h3>7. Oylik to'lov haqida</h3>
+  <ul>
+    <li>Oylik to'lov har oyning 5-sanagacha amalga oshirilishi kerak. Vaqtida to'lov qilinmasa mashg'ulotlarga qo'yilmaydi.</li>
+    <li>Ora kunlik (masalan, D/CH/J kunlari) narxi — 250 ming so'm.</li>
+    <li>Har kunlik narx — 500 ming so'm.</li>
+    <li>Qolgan masalalar murabbiylar bilan kelishiladi.</li>
+  </ul>
+</article>
+
+
+      <div class="legal-footer">
+        <a href="{% url 'login' %}" class="btn btn-primary">Tizimga kirish</a>
+        <a href="{% url 'ota-ona-login' %}" class="btn btn-secondary">Ota-onalar portali</a>
+      </div>
+
+      <p class="legal-meta">
+        &copy; 2026 ABU FIGHT SCHOOL — Kurash va qo'l jangi sport zali<br>
+        So'nggi yangilanish: Oktyabr 2026
+      </p>
+    </div>
+  </div>
+  <script src="{% static 'js/theme.js' %}"></script>
+</body>
+</html>

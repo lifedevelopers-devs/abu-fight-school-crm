@@ -1,0 +1,16 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | ABU FIGHT SCHOOL Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name" style="display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color: #fdf2ff; text-shadow: 0 0 16px rgba(255,117,140,0.9), 0 0 28px rgba(106,17,203,0.75);">
+    <span style="display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:12px; background:linear-gradient(135deg, rgba(255,117,140,0.32), rgba(106,17,203,0.25)); border:1px solid rgba(255,255,255,0.25); box-shadow:0 0 20px rgba(255,117,140,0.6);">AF</span>
+    <span>ABU FIGHT SCHOOL</span>
+</h1>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+{% endblock %}

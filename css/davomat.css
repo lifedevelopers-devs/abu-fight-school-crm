@@ -1,0 +1,469 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.toolbar-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.toolbar-left .form-control {
+  width: auto;
+  min-width: 160px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.student-name {
+  font-weight: 600;
+}
+
+.summary-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  box-shadow: var(--glass-shadow);
+}
+
+.summary-bar strong {
+  color: var(--text);
+}
+
+.attendance-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 0.5rem 0.4rem;
+  min-width: 42px;
+}
+
+.attendance-table th .day-name {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.attendance-table td {
+  padding: 0.4rem;
+}
+
+.attendance-table .row-num {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  width: 30px;
+  text-align: center;
+}
+
+.attendance-table th:first-child,
+.attendance-table td:first-child {
+  min-width: 30px;
+  text-align: center;
+  position: static;
+}
+
+.attendance-table th:nth-child(2),
+.attendance-table td:nth-child(2) {
+  min-width: 200px;
+  text-align: left;
+  position: sticky;
+  left: 0;
+  background: rgba(20, 22, 30, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 2;
+}
+
+.attendance-table thead th:nth-child(2) {
+  background: rgba(30, 34, 44, 0.92);
+}
+
+.attendance-table tbody tr:hover td:nth-child(2) {
+  background: rgba(40, 44, 56, 0.95);
+}
+
+html[data-theme="light"] .attendance-table th:nth-child(2),
+html[data-theme="light"] .attendance-table td:nth-child(2) {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+html[data-theme="light"] .attendance-table thead th:nth-child(2) {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+html[data-theme="light"] .attendance-table tbody tr:hover td:nth-child(2) {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+html[data-theme="light"] .summary-bar,
+html[data-theme="light"] .group-tab,
+html[data-theme="light"] .group-card {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+}
+
+html[data-theme="light"] .group-tab.active {
+  background: rgba(225, 29, 50, 0.14);
+}
+
+.percent-cell {
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.percent-high { color: #4ade80; }
+.percent-mid  { color: #facc15; }
+.percent-low  { color: #f87171; }
+
+.group-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.group-tab {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text-muted);
+  transition: border-color 0.25s, color 0.25s, background 0.25s, box-shadow 0.25s;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset;
+}
+
+.group-tab:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.group-tab.active {
+  background: rgba(255, 45, 63, 0.25);
+  border-color: rgba(255, 45, 63, 0.5);
+  color: var(--text);
+  box-shadow:
+    0 4px 18px var(--accent-glow),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+.group-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.group-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.35rem;
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s, background 0.3s;
+}
+
+.group-card:hover {
+  border-color: rgba(255, 45, 63, 0.5);
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 36px rgba(255, 45, 63, 0.25),
+    0 1px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+.group-card h3 {
+  font-size: 0.95rem;
+}
+
+.group-card p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1.5rem;
+}
+
+.attendance-table td .mark,
+.attendance-table button.mark {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0;
+}
+
+.attendance-table button.mark:focus-visible {
+  outline: 2px solid var(--accent, #ff2d3f);
+  outline-offset: 2px;
+}
+
+.mark-menu {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 150px;
+  padding: 0.5rem;
+  background: rgba(22, 24, 32, 0.96);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.mark-menu[hidden] {
+  display: none !important;
+}
+
+.mark-menu button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: none;
+  border-radius: calc(var(--radius) - 4px);
+  background: transparent;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.mark-menu button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.mark-menu .mark-menu-clear {
+  color: var(--text-muted);
+  font-weight: 500;
+  border-top: 1px solid var(--border);
+  margin-top: 0.15rem;
+  padding-top: 0.65rem;
+  border-radius: 0;
+}
+
+.empty-state {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 1.5rem 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+html[data-theme="light"] .mark-menu {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsive — Tablet Portrait */
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar-left {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .toolbar-left .form-control {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .summary-bar {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .legend {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .group-tabs {
+    gap: 0.4rem;
+  }
+
+  .group-tab {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.75rem;
+  }
+
+  .group-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .attendance-table th:nth-child(2),
+  .attendance-table td:nth-child(2) {
+    min-width: 150px;
+  }
+}
+
+/* Responsive — Mobile */
+@media (max-width: 640px) {
+  .toolbar {
+    gap: 0.75rem;
+  }
+
+  .toolbar-left {
+    gap: 0.5rem;
+  }
+
+  .summary-bar {
+    padding: 0.85rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .legend {
+    font-size: 0.75rem;
+  }
+
+  .attendance-table th {
+    font-size: 0.65rem;
+    padding: 0.4rem 0.3rem;
+    min-width: 36px;
+  }
+
+  .attendance-table th .day-name {
+    font-size: 0.55rem;
+  }
+
+  .attendance-table td {
+    padding: 0.35rem 0.3rem;
+  }
+
+  .attendance-table th:nth-child(2),
+  .attendance-table td:nth-child(2) {
+    min-width: 120px;
+    font-size: 0.75rem;
+  }
+
+  .attendance-table .row-num {
+    font-size: 0.65rem;
+    width: 24px;
+  }
+
+  .attendance-table td .mark,
+  .attendance-table button.mark {
+    min-width: 1.75rem;
+    min-height: 1.75rem;
+    font-size: 0.65rem;
+  }
+
+  .mark-menu {
+    min-width: 130px;
+    padding: 0.4rem;
+  }
+
+  .mark-menu button {
+    padding: 0.45rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .group-card {
+    padding: 1rem;
+  }
+
+  .group-card h3 {
+    font-size: 0.85rem;
+  }
+
+  .group-card p {
+    font-size: 0.75rem;
+  }
+
+  .percent-cell {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .attendance-table th:nth-child(2),
+  .attendance-table td:nth-child(2) {
+    min-width: 100px;
+    font-size: 0.7rem;
+  }
+
+  .attendance-table th:first-child,
+  .attendance-table td:first-child {
+    min-width: 24px;
+  }
+
+  .attendance-table .row-num {
+    font-size: 0.6rem;
+  }
+
+  .student-name {
+    font-size: 0.8rem;
+  }
+
+  .table-wrap {
+    margin-bottom: 1rem;
+  }
+}

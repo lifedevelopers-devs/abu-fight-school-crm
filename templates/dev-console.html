@@ -1,0 +1,109 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>ABU FIGHT SCHOOL — Dev Console</title>
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+
+  <!-- iOS PWA Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ABU Fight">
+<link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="96x96" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="128x128" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="144x144" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="152x152" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="192x192" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="384x384" href="{% static 'img/logo.jpg.jpg' %}">
+<link rel="apple-touch-icon" sizes="512x512" href="{% static 'img/logo.jpg.jpg' %}">
+
+  <meta name="format-detection" content="telephone=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <script>(function(){try{var t=localStorage.getItem('afs-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <link rel="stylesheet" href="{% static 'css/dev-console.css' %}">
+</head>
+<body data-page="dev-console" data-title="Developer Console" class="dev-console">
+  <aside class="sidebar" style="position:fixed; left:0; top:0; width:260px; height:100vh; background:rgba(12,16,24,0.7); border-right:1px solid rgba(255,255,255,0.12); z-index:10; padding:1rem 0.75rem;">
+    <div style="padding:0.5rem 0.75rem 1rem; border-bottom:1px solid rgba(255,255,255,0.12); margin-bottom:1rem;">
+      <strong>ABU FIGHT SCHOOL</strong><br>
+      <span style="color:var(--text-muted); font-size:0.8rem;">Murabbiy paneli</span>
+    </div>
+    <nav style="display:flex; flex-direction:column; gap:0.5rem;">
+      <a href="{% url 'index' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">Dashboard</a>
+      <a href="{% url 'davomat' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">Davomat</a>
+      <a href="{% url 'azolar' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">A'zolar</a>
+      <a href="{% url 'tolov' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">To'lov</a>
+      <a href="{% url 'yangiliklar' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">Yangiliklar</a>
+      <a href="{% url 'profil' %}" style="padding:0.7rem 0.9rem; border-radius:10px; background:rgba(255,255,255,0.06);">Profil</a>
+    </nav>
+    <div style="margin-top:auto; padding:0.75rem; border-top:1px solid rgba(255,255,255,0.12); color:var(--text-muted); font-size:0.8rem;">
+      {{ user.get_full_name|default:user.username }}
+    </div>
+  </aside>
+  <div class="app" id="app" style="margin-left:260px; width:calc(100% - 260px);">
+    <div class="main">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuBtn">&#9776;</button>
+          <h2 id="page-title">Developer Console</h2>
+        </div>
+        <div class="header-right" id="header-right">
+          <a href="{% url 'home' %}" class="btn btn-secondary btn-sm">Panelga o'tish</a>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="dev-stat-grid">
+          <div class="dev-stat">
+            <div class="val">3</div>
+            <div class="lbl">Foydalanuvchilar</div>
+          </div>
+          <div class="dev-stat">
+            <div class="val">6</div>
+            <div class="lbl">Guruhlar</div>
+          </div>
+          <div class="dev-stat">
+            <div class="val" style="color:#facc15;">API</div>
+            <div class="lbl">Keyin ulanadi</div>
+          </div>
+        </div>
+
+        <div class="dev-header-bar">
+          <span class="dev-dot dev-dot-red"></span>
+          <span class="dev-dot dev-dot-yellow"></span>
+          <span class="dev-dot dev-dot-green"></span>
+          <span style="margin-left:0.5rem;">afs-dev-console — bash</span>
+        </div>
+        <div class="dev-terminal" id="terminal"></div>
+        <div class="dev-input-row">
+          <span>$</span>
+          <input type="text" id="devInput" placeholder="help, users, groups, parents, status, clear..." autocomplete="off">
+        </div>
+
+        <div class="dev-grid">
+          <div class="dev-panel">
+            <h3>Foydalanuvchilar</h3>
+            <div id="userList"></div>
+          </div>
+          <div class="dev-panel">
+            <h3>Ota-ona sahifalari (faqat ko'rish)</h3>
+            <ul class="dev-link-list" id="parentLinks"></ul>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:1rem;font-family:var(--font);">
+              Ota-onalar bu sahifalarni faqat ko'radi — o'zgartira olmaydi.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/data.js' %}"></script>
+<script src="{% static 'js/ota-ona-data.js' %}"></script>
+<script src="{% static 'js/layout.js' %}"></script>
+<script src="{% static 'js/dev-console.js' %}"></script>
+</body>
+</html>
