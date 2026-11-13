@@ -23,4 +23,7 @@ urlpatterns = [
     path('ota-ona-5-guruh/', views.ota_ona_5, name='ota-ona-5'),
     path('ota-ona-6-guruh/', views.ota_ona_6, name='ota-ona-6'),
     path('dev-console/', views.dev_console, name='dev-console'),
+    path('sw.js', views.service_worker, name='sw'),
+    path('manifest.json', views.manifest, name='manifest'),
+    path('offline/', views.offline, name='offline'),
 ]
