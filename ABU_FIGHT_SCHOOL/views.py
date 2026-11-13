@@ -1,15 +1,83 @@
+import os
 from datetime import date
 from decimal import Decimal
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.staticfiles import finders
 from django.db.models import Sum
+from django.http import FileResponse, Http404
 from django.shortcuts import redirect, render
+from django.views.decorators.cache import never_cache
 
 from .models import Athlete, Attendance, Coach, Group, News, Payment, Product, Workouts
 
+
+# ---------------------------------------------------------------------------
+# PWA: service worker, manifest, offline sahifa
+# ---------------------------------------------------------------------------
+
+def _find_static_file(relative_path):
+    """
+    Static faylni topadi: avval staticfiles finders orqali (STATICFILES_DIRS va
+    app'lardagi static papkalar), keyin STATIC_ROOT (collectstatic dan keyin),
+    oxirida BASE_DIR/static.
+    """
+    found = finders.find(relative_path)
+    if found:
+        return found
+
+    static_root = getattr(settings, 'STATIC_ROOT', None)
+    if static_root:
+        candidate = os.path.join(static_root, relative_path)
+        if os.path.exists(candidate):
+            return candidate
+
+    candidate = os.path.join(settings.BASE_DIR, 'static', relative_path)
+    if os.path.exists(candidate):
+        return candidate
+
+    return None
+
+
+@never_cache
+def service_worker(request):
+    """
+    /sw.js manzilidan beriladi, shunda service worker scope'i butun sayt ('/')
+    bo'ladi. Agar /static/sw.js dan berilsa, scope faqat /static/ bo'lib qoladi.
+    """
+    path = _find_static_file('sw.js')
+    if not path:
+        raise Http404('sw.js topilmadi')
+
+    response = FileResponse(open(path, 'rb'), content_type='application/javascript')
+    response['Service-Worker-Allowed'] = '/'
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    return response
+
+
+def manifest(request):
+    """/manifest.json manzilidan beriladi."""
+    path = _find_static_file('manifest.json')
+    if not path:
+        raise Http404('manifest.json topilmadi')
+
+    response = FileResponse(open(path, 'rb'), content_type='application/manifest+json')
+    response['Cache-Control'] = 'no-cache'
+    return response
+
+
+def offline(request):
+    """Internet yo'q bo'lganda service worker shu sahifani ko'rsatadi."""
+    return render(request, 'offline.html')
+
+
+# ---------------------------------------------------------------------------
+# Yordamchi funksiyalar
+# ---------------------------------------------------------------------------
 
 def _normalize_identity(value):
     if value is None:
@@ -69,6 +137,10 @@ def get_logged_in_athlete(user):
     return None
 
 
+# ---------------------------------------------------------------------------
+# Asosiy sahifalar
+# ---------------------------------------------------------------------------
+
 @login_required(login_url='login')
 def home(request):
     coach = get_logged_in_coach(request.user)
@@ -96,7 +168,17 @@ def home(request):
     return render(request, 'index.html', context)
 
 
+@never_cache
 def login_view(request):
+    # PWA start_url = /login/ bo'lgani uchun: allaqachon kirgan foydalanuvchi
+    # ilovani ochganda login sahifasini emas, to'g'ridan-to'g'ri asosiy sahifani ko'radi.
+    if request.user.is_authenticated:
+        coach = get_logged_in_coach(request.user)
+        athlete = get_logged_in_athlete(request.user)
+        if athlete and not coach:
+            return redirect('profil')
+        return redirect('index')
+
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
