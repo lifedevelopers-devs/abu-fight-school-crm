@@ -1,4 +1,5 @@
 import os
+import calendar
 from datetime import date
 from decimal import Decimal
 
@@ -237,23 +238,27 @@ def davomat_guruh(request):
     selected_group = groups.filter(id=group_id).first() if group_id else groups.first()
     students = selected_group.students.all().order_by('f_name') if selected_group else Athlete.objects.none()
 
-    month = request.GET.get('month') or date.today().strftime('%Y-%m')
-    year, month_num = map(int, month.split('-'))
-    days_in_month = []
-    for day_num in range(1, 32):
-        try:
-            current_date = date(year, month_num, day_num)
-        except ValueError:
-            break
-        if current_date.month != month_num:
-            continue
-        if current_date.weekday() == 6:
-            continue
-        days_in_month.append({
+    today = date.today()
+    month_value = request.GET.get('month', '')
+    try:
+        year, month_num = map(int, month_value.split('-'))
+        month_start = date(year, month_num, 1)
+    except (TypeError, ValueError):
+        year, month_num = today.year, today.month
+        month_start = date(year, month_num, 1)
+    month = month_start.strftime('%Y-%m')
+
+    # Noyabr oyida 1–13 sanalarini ko'rsatmaymiz; qolgan oylar to'liq kalendar oyidir.
+    first_day = 14 if year == today.year and month_num == 11 else 1
+    last_day = calendar.monthrange(year, month_num)[1]
+    days_in_month = [
+        {
             'day': day_num,
-            'iso': current_date.isoformat(),
-            'label': current_date.strftime('%d.%m'),
-        })
+            'iso': date(year, month_num, day_num).isoformat(),
+            'label': date(year, month_num, day_num).strftime('%d.%m'),
+        }
+        for day_num in range(first_day, last_day + 1)
+    ]
 
     attendance_rows = []
     if selected_group:
@@ -276,7 +281,7 @@ def davomat_guruh(request):
         'attendance_rows': attendance_rows,
         'days': days_in_month,
         'month': month,
-        'month_label': date(year, month_num, 1).strftime('%B %Y'),
+        'month_label': month_start.strftime('%B %Y'),
     }
     return render(request, 'davomat-guruh.html', context)
 
