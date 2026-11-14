@@ -93,5 +93,12 @@ if (document.readyState === 'loading') {
   AFS_THEME.init();
 }
 
-// Legacy mock service-worker registration removed; Django routes are the only active app entry points.
+// Register the root-scoped Django service worker for PWA/offline support.
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch((error) => {
+      console.error('Service worker registration failed:', error);
+    });
+  });
+}
 

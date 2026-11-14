@@ -1,5 +1,6 @@
 from django.urls import path
 from ABU_FIGHT_SCHOOL import views
+from ABU_FIGHT_SCHOOL.pwa import manifest as pwa_manifest
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -24,6 +25,6 @@ urlpatterns = [
     path('ota-ona-6-guruh/', views.ota_ona_6, name='ota-ona-6'),
     path('dev-console/', views.dev_console, name='dev-console'),
     path('sw.js', views.service_worker, name='sw'),
-    path('manifest.json', views.manifest, name='manifest'),
+    path('manifest.json', pwa_manifest, name='manifest'),
     path('offline/', views.offline, name='offline'),
 ]
