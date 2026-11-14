@@ -2,6 +2,7 @@ import os
 from datetime import date
 from decimal import Decimal
 
+from django.http import JsonResponse
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -468,3 +469,32 @@ def dev_console(request):
         'payments_count': Payment.objects.count(),
         'news_count': News.objects.count(),
     })
+
+
+def manifest(request):
+    data = {
+        "name": "ABU FIGHT SCHOOL",
+        "short_name": "ABU Fight",
+        "description": "ABU FIGHT SCHOOL - Sportchilar va ustozlar uchun boshqaruv tizimi",
+        "start_url": "/",
+        "scope": "/",
+        "display": "standalone",
+        "orientation": "portrait-primary",
+        "background_color": "#07090d",
+        "theme_color": "#ff2d3f",
+        "icons": [
+            {
+                "src": "/static/img/icon-192.png",
+                "sizes": "192x192",
+                "type": "image/png",
+                "purpose": "any"
+            },
+            {
+                "src": "/static/img/icon-512.png",
+                "sizes": "512x512",
+                "type": "image/png",
+                "purpose": "any"
+            }
+        ]
+    }
+    return JsonResponse(data, content_type="application/manifest+json")
