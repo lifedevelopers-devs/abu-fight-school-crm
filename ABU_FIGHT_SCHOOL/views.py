@@ -1,4 +1,5 @@
 import os
+import re
 from datetime import date
 from decimal import Decimal
 
@@ -84,6 +85,20 @@ def _normalize_identity(value):
     if value is None:
         return ''
     return str(value).strip().lower()
+
+
+def _attendance_weekdays(group):
+    """Guruh nomidagi jadval belgisiga mos mashg'ulot kunlarini qaytaradi."""
+    tokens = set(re.findall(r'[^\W_]+', group.name.upper(), flags=re.UNICODE))
+    if {'P', 'SH'}.issubset(tokens):
+        # S / P / SH: Seshanba, Payshanba, Shanba.
+        return {1, 3, 5}
+    if {'CH', 'J'}.issubset(tokens):
+        # D / CH / J: Dushanba, Chorshanba, Juma.
+        return {0, 2, 4}
+    # Noma'lum jadval belgisi bo'lsa, oldingi xulqni saqlab barcha ish
+    # kunlarini ko'rsatamiz (yakshanba quyida chiqarib tashlanadi).
+    return {0, 1, 2, 3, 4, 5}
 
 
 def get_logged_in_coach(user):
@@ -239,6 +254,7 @@ def davomat_guruh(request):
 
     month = request.GET.get('month') or date.today().strftime('%Y-%m')
     year, month_num = map(int, month.split('-'))
+    allowed_weekdays = _attendance_weekdays(selected_group) if selected_group else set()
     days_in_month = []
     for day_num in range(1, 32):
         try:
@@ -247,7 +263,7 @@ def davomat_guruh(request):
             break
         if current_date.month != month_num:
             continue
-        if current_date.weekday() == 6:
+        if current_date.weekday() not in allowed_weekdays:
             continue
         days_in_month.append({
             'day': day_num,
