@@ -3,7 +3,7 @@
   "name": "ABU FIGHT SCHOOL",
   "short_name": "ABU Fight",
   "description": "ABU FIGHT SCHOOL - Sportchilar va ustozlar uchun boshqaruv tizimi",
-  "start_url": "/login/",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
